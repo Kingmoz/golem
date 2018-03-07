@@ -71,3 +71,8 @@ STAGE_TIME = 36000
 # THREADING CONST #
 ###################
 REACTOR_THREAD_POOL_SIZE = 20
+
+#################
+# CONCENT CONST #
+#################
+NUM_OF_RES_TRANSFERS_NEEDED_FOR_VER = 3
