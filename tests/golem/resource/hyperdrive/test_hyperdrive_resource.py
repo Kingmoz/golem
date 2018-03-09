@@ -18,7 +18,7 @@ class TestResourceCache(TempDirFixture):
         self.resource_path = str(os.path.join(self.tempdir, 'prefix', 'path'))
         self.resource_name = '\0!abstract_name\0!'
         self.resource_files = [self.resource_name]
-        self.resource_hash = str(uuid.uuid4())
+        self.resource_hash = str(uuid.uuid1())
         self.prefix = str(os.path.join('abstract', 'prefix'))
         self.task_id = '\0!abstract\0!'
 
@@ -32,8 +32,8 @@ class TestResourceCache(TempDirFixture):
         )
 
         assert self.cache.get_prefix(resource.task_id) == self.prefix
-        assert self.cache.get_prefix(str(uuid.uuid4())) == ''
-        assert self.cache.get_prefix(str(uuid.uuid4()), 'default_value') == \
+        assert self.cache.get_prefix(str(uuid.uuid1())) == ''
+        assert self.cache.get_prefix(str(uuid.uuid1()), 'default_value') == \
             'default_value'
 
         self.cache.add_resource(resource)
@@ -50,8 +50,8 @@ class TestResourceCache(TempDirFixture):
 
         new_task_file = 'new_name'
         new_resource = Resource(
-            str(uuid.uuid4()),
-            task_id=str(uuid.uuid4()),
+            str(uuid.uuid1()),
+            task_id=str(uuid.uuid1()),
             files=[new_task_file],
             path=self.resource_path
         )
@@ -91,8 +91,8 @@ class TestResourceCache(TempDirFixture):
 
         new_path = '/other/path'
         new_resource = Resource(
-            str(uuid.uuid4()),
-            task_id=str(uuid.uuid4()),
+            str(uuid.uuid1()),
+            task_id=str(uuid.uuid1()),
             path=new_path,
             files=[new_path]
         )
@@ -183,7 +183,7 @@ class TestResourceStorage(ResourceSetUp):
 
         task_dir = self.storage.get_dir(self.task_id)
         self.storage.cache.set_prefix(self.task_id, task_dir)
-        new_category = str(uuid.uuid4())
+        new_category = str(uuid.uuid1())
 
         for file_path in self.target_resources:
 

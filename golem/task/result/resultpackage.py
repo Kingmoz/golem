@@ -27,7 +27,7 @@ def backup_rename(file_path, max_iterations=100):
         if not os.path.exists(name):
             break
         elif counter == max_iterations:
-            name = file_path + '.{}'.format(uuid.uuid4())
+            name = file_path + '.{}'.format(uuid.uuid1())
 
     os.rename(file_path, name)
 

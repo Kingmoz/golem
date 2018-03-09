@@ -35,9 +35,9 @@ class TestMessageHistoryService(DatabaseFixture):
     @staticmethod
     def _build_dict(task=None, subtask=None):
         return dict(
-            task=task or str(uuid.uuid4()),
-            subtask=subtask or str(uuid.uuid4()),
-            node=str(uuid.uuid4()),
+            task=task or str(uuid.uuid1()),
+            subtask=subtask or str(uuid.uuid1()),
+            node=str(uuid.uuid1()),
 
             msg_date=datetime.datetime.now(),
             msg_cls='Hello',
@@ -84,8 +84,8 @@ class TestMessageHistoryService(DatabaseFixture):
         assert message_count() == 1
 
     def test_remove(self):
-        task = str(uuid.uuid4())
-        params = dict(subtask=str(uuid.uuid4()))
+        task = str(uuid.uuid1())
+        params = dict(subtask=str(uuid.uuid1()))
 
         self.service.remove(task, **params)
         assert self.service._remove_queue.get(block=False) == (task, params)
@@ -112,7 +112,7 @@ class TestMessageHistoryService(DatabaseFixture):
             assert self.service._remove_queue.put.called
             assert message_count() == 1
 
-        self.service.remove_sync(msg['task'], subtask=str(uuid.uuid4()))
+        self.service.remove_sync(msg['task'], subtask=str(uuid.uuid1()))
         assert message_count() == 1
         self.service.remove_sync(msg['task'], subtask=msg['subtask'])
         assert message_count() == 0
@@ -238,8 +238,8 @@ class TestMessageHistoryService(DatabaseFixture):
         assert not self.service.remove_sync.called
 
         # Add tuple
-        task = str(uuid.uuid4())
-        props = dict(subtask=str(uuid.uuid4()))
+        task = str(uuid.uuid1())
+        props = dict(subtask=str(uuid.uuid1()))
         self.service._remove_queue.put((task, props))
 
         # With tuple

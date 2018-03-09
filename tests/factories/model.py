@@ -9,5 +9,5 @@ class Income(factory.Factory):
         model = model.Income
 
     sender_node = factory.Faker('binary', length=64)
-    subtask = factory.Faker('uuid4')
+    subtask = factory.Faker('uuid1')
     value = factory.Faker('pyint')

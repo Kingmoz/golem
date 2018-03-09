@@ -182,7 +182,7 @@ class DummyClient(IClient):
     def _add(self, files: dict):
         from golem.core.fileshelper import common_dir
 
-        resource_hash = str(uuid.uuid4())
+        resource_hash = str(uuid.uuid1())
         self._resources[resource_hash] = files
         self._paths[resource_hash] = common_dir(files.keys())
         return resource_hash

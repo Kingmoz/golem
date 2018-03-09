@@ -609,7 +609,7 @@ class TestTaskSession(ConcentMessageMixin, LogTestCase,
             m.serialize(lambda x: b'\000' * 65),
         )
         sess._can_send = lambda *_: True
-        sess.request_resource(str(uuid.uuid4()))
+        sess.request_resource(str(uuid.uuid1()))
 
         self.assertTrue(
             message.Message.deserialize(db.buffered_data, lambda x: x)
@@ -758,9 +758,9 @@ class ForceReportComputedTaskTestCase(testutils.DatabaseFixture,
         history.MessageHistoryService()
         self.ts = TaskSession(Mock())
         self.n = Node()
-        self.task_id = str(uuid.uuid4())
-        self.subtask_id = str(uuid.uuid4())
-        self.node_id = str(uuid.uuid4())
+        self.task_id = str(uuid.uuid1())
+        self.subtask_id = str(uuid.uuid1())
+        self.node_id = str(uuid.uuid1())
 
     def tearDown(self):
         testutils.DatabaseFixture.tearDown(self)

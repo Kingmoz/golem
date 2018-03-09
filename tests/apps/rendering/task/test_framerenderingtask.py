@@ -214,8 +214,8 @@ class TestFrameRenderingTask(TestDirFixture, LogTestCase):
         assert all(len(f) == 0 for f in list(frames.values()))
 
         task.subtasks_given = {
-            str(uuid.uuid4()): None,
-            str(uuid.uuid4()): {
+            str(uuid.uuid1()): None,
+            str(uuid.uuid1()): {
                 'frames': None
             }
         }
@@ -225,10 +225,10 @@ class TestFrameRenderingTask(TestDirFixture, LogTestCase):
         assert all(len(f) == 0 for f in list(frames.values()))
 
         task.subtasks_given = {
-            str(uuid.uuid4()): {
+            str(uuid.uuid1()): {
                 'frames': [0, 1]
             },
-            str(uuid.uuid4()): {
+            str(uuid.uuid1()): {
                 'frames': [2, 3]
             }
         }
@@ -238,10 +238,10 @@ class TestFrameRenderingTask(TestDirFixture, LogTestCase):
         assert all(len(f) == 1 for f in list(frames.values()))
 
         task.subtasks_given = {
-            str(uuid.uuid4()): {
+            str(uuid.uuid1()): {
                 'frames': [0, 1]
             },
-            str(uuid.uuid4()): {
+            str(uuid.uuid1()): {
                 'frames': [1, 2, 3]
             }
         }

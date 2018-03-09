@@ -22,8 +22,8 @@ class ComputeTaskDef(factory.DictFactory):
     class Meta:
         model = tasks.ComputeTaskDef
 
-    task_id = factory.Faker('uuid4')
-    subtask_id = factory.Faker('uuid4')
+    task_id = factory.Faker('uuid1')
+    subtask_id = factory.Faker('uuid1')
     deadline = factory.LazyFunction(lambda: calendar.timegm(time.gmtime()))
     src_code = factory.Faker('text')
 
@@ -46,7 +46,7 @@ class CannotComputeTask(factory.Factory):
     class Meta:
         model = tasks.CannotComputeTask
 
-    subtask_id = factory.Faker('uuid4')
+    subtask_id = factory.Faker('uuid1')
     task_to_compute = factory.SubFactory(TaskToCompute)
 
 
@@ -54,7 +54,7 @@ class TaskFailure(factory.Factory):
     class Meta:
         model = tasks.TaskFailure
 
-    subtask_id = factory.Faker('uuid4')
+    subtask_id = factory.Faker('uuid1')
     err = factory.Faker('sentence')
     task_to_compute = factory.SubFactory(TaskToCompute)
 
@@ -63,7 +63,7 @@ class ReportComputedTask(factory.Factory):
     class Meta:
         model = tasks.ReportComputedTask
 
-    subtask_id = factory.Faker('uuid4')
+    subtask_id = factory.Faker('uuid1')
     result_type = 0
     computation_time = factory.Faker('pyfloat')
     node_name = factory.Faker('name')
@@ -99,7 +99,7 @@ class ServiceRefused(factory.Factory):
         model = concents.ServiceRefused
 
     reason = factory.fuzzy.FuzzyChoice(concents.ServiceRefused.REASON)
-    subtask_id = factory.Faker('uuid4')
+    subtask_id = factory.Faker('uuid1')
     task_to_compute = factory.SubFactory(TaskToCompute)
 
 
@@ -115,7 +115,7 @@ class AckReportComputedTask(factory.Factory):
     class Meta:
         model = concents.AckReportComputedTask
 
-    subtask_id = factory.Faker('uuid4')
+    subtask_id = factory.Faker('uuid1')
     task_to_compute = factory.SubFactory(
         TaskToCompute,
         compute_task_def__subtask_id=factory.SelfAttribute('...subtask_id'),

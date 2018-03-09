@@ -261,8 +261,8 @@ class TestTaskComputer(DatabaseFixture, LogTestCase):
     @mock.patch('golem.task.taskthread.TaskThread.start')
     def test_compute_task(self, start):
 
-        task_id = str(uuid.uuid4())
-        subtask_id = str(uuid.uuid4())
+        task_id = str(uuid.uuid1())
+        subtask_id = str(uuid.uuid1())
         task_computer = mock.Mock()
         compute_task = TaskComputer._TaskComputer__compute_task
 

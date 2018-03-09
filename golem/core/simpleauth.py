@@ -7,5 +7,5 @@ class SimpleAuth(object):
 
     @classmethod
     def generate_uuid(cls):
-        """ Return new UUID4 """
-        return uuid.uuid4()
+        """ Return new uuid1 """
+        return uuid.uuid1()

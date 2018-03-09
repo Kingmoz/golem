@@ -13,7 +13,7 @@ class ResourceHandshake:
                  'started', 'local_result', 'remote_result')
 
     def __init__(self, message_=None):
-        self.nonce = str(uuid.uuid4())
+        self.nonce = str(uuid.uuid1())
         self.file = None
         self.hash = None
         self.message = message_
@@ -30,7 +30,7 @@ class ResourceHandshake:
     def start(self, directory):
         self.local_result = None
         self.remote_result = None
-        self.file = os.path.join(directory, str(uuid.uuid4()))
+        self.file = os.path.join(directory, str(uuid.uuid1()))
         self.hash = None
         self.started = True
 

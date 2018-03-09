@@ -169,7 +169,7 @@ class TestTaskManager(LogTestCase, TestDirFixtureWithReactor,
             self.tm.start_task(task_mock.header.task_id)
 
         with self.assertLogs(logger, level="WARNING") as log:
-            self.tm.start_task(str(uuid.uuid4()))
+            self.tm.start_task(str(uuid.uuid1()))
         assert any("This is not my task" in log for log in log.output)
 
     def _get_test_dummy_task(self, task_id):
@@ -889,7 +889,7 @@ class TestTaskManager(LogTestCase, TestDirFixtureWithReactor,
         previews = [None, 'result', ['result_1', 'result_2']]
 
         for i in range(0, n):
-            task_id = str(uuid.uuid4())
+            task_id = str(uuid.uuid1())
 
             definition = TaskDefinition()
             definition.options = Mock()
@@ -903,7 +903,7 @@ class TestTaskManager(LogTestCase, TestDirFixtureWithReactor,
             definition.full_task_timeout = 3671 * 10
             definition.max_price = 1 * 10 ** 18
             definition.resolution = [1920, 1080]
-            definition.resources = [str(uuid.uuid4()) for _ in range(5)]
+            definition.resources = [str(uuid.uuid1()) for _ in range(5)]
             definition.output_file = os.path.join(self.tempdir, 'somefile')
             definition.main_scene_file = self.path
             definition.options.frames = list(range(i + 1))
@@ -961,7 +961,7 @@ class TestTaskManager(LogTestCase, TestDirFixtureWithReactor,
 
         for i in range(0, n):
             subtask = SubtaskState()
-            subtask.subtask_id = str(uuid.uuid4())
+            subtask.subtask_id = str(uuid.uuid1())
             subtask.subtask_status = SubtaskStatus.starting
             subtask.computer = ComputerState()
             subtask.computer.node_name = 'node_{}'.format(i)

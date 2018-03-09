@@ -7,7 +7,7 @@ from golem.task.taskclient import TaskClient
 class TestTaskClient(unittest.TestCase):
     def test(self):
 
-        node_id = str(uuid.uuid4())
+        node_id = str(uuid.uuid1())
         node_dict = {}
 
         tc = TaskClient.assert_exists(node_id, node_dict)

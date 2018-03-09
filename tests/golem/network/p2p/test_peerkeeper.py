@@ -105,7 +105,7 @@ class MockPeer:
         self.address = random.randrange(1, 2 ** 32 - 1)
         self.port = random.randrange(1000, 65535)
         self.node = None
-        self.node_name = str(uuid.uuid4())
+        self.node_name = str(uuid.uuid1())
 
     def __str__(self):
         return self.key

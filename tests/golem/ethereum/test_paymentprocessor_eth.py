@@ -35,7 +35,7 @@ class TestPaymentProcessorWithDB(testutils.DatabaseFixture):
     def test_load_from_db(self, gnt_balance_mock, eth_balance_mock):
         self.assertEqual([], self.payment_processor._awaiting)
 
-        subtask_id = str(uuid.uuid4())
+        subtask_id = str(uuid.uuid1())
         value = random.randint(1, 2**5)
         payee = encode_hex(os.urandom(32))
         payment = model.Payment.create(
@@ -54,14 +54,14 @@ class TestPaymentProcessorWithDB(testutils.DatabaseFixture):
         self.assertEqual({}, self.payment_processor._inprogress)
         tx_hash = '0x' + encode_hex(os.urandom(32))
         sent_payment = model.Payment.create(
-            subtask='sent' + str(uuid.uuid4()),
+            subtask='sent' + str(uuid.uuid1()),
             payee=payee,
             value=value,
             details=model.PaymentDetails(tx=tx_hash[2:]),
             status=model.PaymentStatus.sent
         )
         sent_payment2 = model.Payment.create(
-            subtask='sent2' + str(uuid.uuid4()),
+            subtask='sent2' + str(uuid.uuid1()),
             payee=payee,
             value=value,
             details=model.PaymentDetails(tx=tx_hash[2:]),

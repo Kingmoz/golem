@@ -7,7 +7,7 @@ from golem.transactions.ethereum.ethereumincomeskeeper \
 
 
 def get_some_id():
-    return str(uuid.uuid4())
+    return str(uuid.uuid1())
 
 
 def get_receiver_id():

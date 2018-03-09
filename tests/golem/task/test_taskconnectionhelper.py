@@ -9,7 +9,7 @@ from golem.task.taskconnectionshelper import TaskConnectionsHelper
 class MockNodeInfo(object):
 
     def __init__(self):
-        self.key = str(uuid.uuid4())
+        self.key = str(uuid.uuid1())
 
 
 class TestTaskConnectionsHelper(unittest.TestCase):

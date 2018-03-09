@@ -419,7 +419,7 @@ class TestTasks(TempDirFixture):
             assert tasks.stats()
             client.get_task_stats.assert_called_with()
 
-    @patch("golem.interface.client.tasks.uuid4")
+    @patch("golem.interface.client.tasks.uuid1")
     def test_create(self, mock_uuid) -> None:
         client = self.client
         mock_uuid.return_value = "new_uuid"
@@ -698,7 +698,7 @@ class TestDebug(unittest.TestCase):
 
         with client_ctx(Debug, client):
             debug = Debug()
-            task_id = str(uuid.uuid4())
+            task_id = str(uuid.uuid1())
 
             debug.rpc(('net.ident',))
             assert client.get_node.called

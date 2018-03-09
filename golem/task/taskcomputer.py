@@ -358,7 +358,7 @@ class TaskComputer(object):
         task_timeout = deadline_to_timeout(deadline)
 
         working_dir = self.assigned_subtasks[subtask_id]['working_directory']
-        unique_str = str(uuid.uuid4())
+        unique_str = str(uuid.uuid1())
 
         self.reset(counting_task=task_id)
 

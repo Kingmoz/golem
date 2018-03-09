@@ -6,7 +6,7 @@ from golem.core.common import timeout_to_deadline, datetime_to_timestamp
 import time
 import pytz
 from datetime import datetime, timedelta
-from uuid import uuid4
+from uuid import uuid1
 
 
 class TestTaskArchiver(TestCase):
@@ -33,7 +33,7 @@ class TestTaskArchiver(TestCase):
             last_checking = time.time()
         if not deadline:
             deadline = timeout_to_deadline(36000)
-        ret = TaskHeader("ABC", str(uuid4()), "10.10.10.10", 10101, "key",
+        ret = TaskHeader("ABC", str(uuid1()), "10.10.10.10", 10101, "key",
                          "DEFAULT", max_price=max_price, deadline=deadline,
                          min_version=min_version)
         if last_checking:

@@ -63,7 +63,7 @@ def mock_async_run(req, success, error):
 
 
 def random_hex_str() -> str:
-    return str(uuid.uuid4()).replace('-', '')
+    return str(uuid.uuid1()).replace('-', '')
 
 
 def done_deferred(return_value=None):
@@ -102,7 +102,7 @@ class TestClient(TestWithDatabase, TestWithReactor):
         n = 9
         payments = [
             Payment(
-                subtask=uuid.uuid4(),
+                subtask=uuid.uuid1(),
                 status=PaymentStatus.awaiting,
                 payee=decode_hex(random_hex_str()),
                 value=i * 10**18,
@@ -226,7 +226,7 @@ class TestClient(TestWithDatabase, TestWithReactor):
         )
 
         def unique_dir():
-            d = os.path.join(self.path, str(uuid.uuid4()))
+            d = os.path.join(self.path, str(uuid.uuid1()))
             if not os.path.exists(d):
                 os.makedirs(d)
             return d
@@ -558,7 +558,7 @@ class TestDoWorkService(TestWithReactor):
     def test_pings(self, log):
         c = Mock()
         c.p2pservice = Mock()
-        c.p2pservice.peers = {str(uuid.uuid4()): Mock()}
+        c.p2pservice.peers = {str(uuid.uuid1()): Mock()}
         c.task_server = Mock()
         c.resource_server = Mock()
         c.ranking = Mock()
@@ -779,7 +779,7 @@ class TestClientRPCMethods(TestWithDatabase, LogTestCase):
             )
 
         client.sync = Mock()
-        client.keys_auth = Mock(key_id=str(uuid.uuid4()))
+        client.keys_auth = Mock(key_id=str(uuid.uuid1()))
         client.p2pservice = Mock(peers={})
         with patch('golem.network.concent.handlers_library.HandlersLibrary'
                    '.register_handler', ):
@@ -817,7 +817,7 @@ class TestClientRPCMethods(TestWithDatabase, LogTestCase):
         c = self.client
 
         def unique_dir():
-            d = self.new_path / str(uuid.uuid4())
+            d = self.new_path / str(uuid.uuid1())
             d.mkdir(exist_ok=True)
             return d
 
@@ -862,7 +862,7 @@ class TestClientRPCMethods(TestWithDatabase, LogTestCase):
 
         task_header = Mock(
             max_price=1 * 10**18,
-            task_id=str(uuid.uuid4())
+            task_id=str(uuid.uuid1())
         )
         task = Mock(
             header=task_header,
@@ -874,7 +874,7 @@ class TestClientRPCMethods(TestWithDatabase, LogTestCase):
 
         c.enqueue_new_task(dict(
             max_price=1 * 10**18,
-            task_id=str(uuid.uuid4())
+            task_id=str(uuid.uuid1())
         ))
         assert c.task_server.task_manager.create_task.called
 
@@ -980,7 +980,7 @@ class TestClientRPCMethods(TestWithDatabase, LogTestCase):
             c(True)
 
         with self.assertRaises(Exception):
-            sync_wait(self.client.run_benchmark(str(uuid.uuid4())))
+            sync_wait(self.client.run_benchmark(str(uuid.uuid1())))
 
         sync_wait(self.client.run_benchmark(BlenderEnvironment.get_id()))
 
@@ -1034,14 +1034,14 @@ class TestClientRPCMethods(TestWithDatabase, LogTestCase):
     def test_settings(self, *_):
         c = self.client
 
-        new_node_name = str(uuid.uuid4())
+        new_node_name = str(uuid.uuid1())
         self.assertNotEqual(c.get_setting('node_name'), new_node_name)
 
         c.update_setting('node_name', new_node_name)
         self.assertEqual(c.get_setting('node_name'), new_node_name)
         self.assertEqual(c.get_settings()['node_name'], new_node_name)
 
-        newer_node_name = str(uuid.uuid4())
+        newer_node_name = str(uuid.uuid1())
         self.assertNotEqual(c.get_setting('node_name'), newer_node_name)
 
         settings = c.get_settings()
@@ -1055,10 +1055,10 @@ class TestClientRPCMethods(TestWithDatabase, LogTestCase):
 
         # invalid settings
         with self.assertRaises(KeyError):
-            c.get_setting(str(uuid.uuid4()))
+            c.get_setting(str(uuid.uuid1()))
 
         with self.assertRaises(KeyError):
-            c.update_setting(str(uuid.uuid4()), 'value')
+            c.update_setting(str(uuid.uuid1()), 'value')
 
     def test_publisher(self, *_):
         from golem.rpc.session import Publisher
@@ -1105,7 +1105,7 @@ class TestClientRPCMethods(TestWithDatabase, LogTestCase):
         c.remove_task = Mock()
         c.task_server = Mock()
 
-        task_id = str(uuid.uuid4())
+        task_id = str(uuid.uuid1())
         c.delete_task(task_id)
         assert c.remove_task_header.called
         assert c.remove_task.called
@@ -1157,7 +1157,7 @@ class TestClientRPCMethods(TestWithDatabase, LogTestCase):
             reasons = c.get_unsupport_reasons(-1)
 
     def test_task_preview(self, *_):
-        task_id = str(uuid.uuid4())
+        task_id = str(uuid.uuid1())
         c = self.client
         c.task_server.task_manager.tasks[task_id] = Mock()
         c.task_server.task_manager.get_task_preview = Mock()
@@ -1168,7 +1168,7 @@ class TestClientRPCMethods(TestWithDatabase, LogTestCase):
         )
 
     def test_subtasks_borders(self, *_):
-        task_id = str(uuid.uuid4())
+        task_id = str(uuid.uuid1())
         c = self.client
         c.task_server.task_manager.tasks[task_id] = Mock()
         c.task_server.task_manager.get_subtasks_borders = Mock()
@@ -1267,7 +1267,7 @@ class TestClientRPCMethods(TestWithDatabase, LogTestCase):
     def __new_session():
         session = Mock()
         for attr in PeerSessionInfo.attributes:
-            setattr(session, attr, str(uuid.uuid4()))
+            setattr(session, attr, str(uuid.uuid1()))
         return session
 
 

@@ -35,7 +35,7 @@ class TestDockerJob(DockerTestCase):
     TEST_SCRIPT = "print 'Adventure Time!'\n"
 
     def setUp(self):
-        main_dir = get_local_datadir('tests-' + str(uuid.uuid4()))
+        main_dir = get_local_datadir('tests-' + str(uuid.uuid1()))
         if not os.path.exists(main_dir):
             os.makedirs(main_dir)
 

@@ -566,7 +566,7 @@ class CoreTaskBuilder(TaskBuilder):
     def build_minimal_definition(cls, task_type: CoreTaskTypeInfo, dictionary):
         definition = task_type.definition()
         definition.options = task_type.options()
-        definition.task_id = dictionary.get('id', str(uuid.uuid4()))
+        definition.task_id = dictionary.get('id', str(uuid.uuid1()))
         definition.task_type = task_type.name
         definition.resources = set(dictionary['resources'])
         definition.total_subtasks = int(dictionary['subtasks'])

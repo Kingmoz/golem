@@ -24,7 +24,7 @@ class TestResourceHandshake(TempDirFixture):
 
     def setUp(self):
         super().setUp()
-        key_id = str(uuid.uuid4())
+        key_id = str(uuid.uuid1())
         self.handshake = ResourceHandshake(key_id)
 
     def test_start(self):
@@ -76,10 +76,10 @@ class TestResourceHandshakeSessionMixin(TempDirFixture):
     def setUp(self):
         super().setUp()
 
-        self.key_id = str(uuid.uuid4())
+        self.key_id = str(uuid.uuid1())
         self.message = dict(
             node_name='test node',
-            task_id=str(uuid.uuid4()),
+            task_id=str(uuid.uuid1()),
             perf_index=4000,
             price=5,
             max_resource_size=10 * 10 ** 8,
@@ -134,7 +134,7 @@ class TestResourceHandshakeSessionMixin(TempDirFixture):
         session._download_handshake_nonce = Mock()
         session._handshake_error = Mock()
 
-        resource = str(uuid.uuid4())
+        resource = str(uuid.uuid1())
         msg = message.ResourceHandshakeStart(resource=resource)
         session._react_to_resource_handshake_start(msg)
 
@@ -148,7 +148,7 @@ class TestResourceHandshakeSessionMixin(TempDirFixture):
         session._download_handshake_nonce = Mock()
         session._handshake_error = Mock()
 
-        msg = message.ResourceHandshakeStart(resource=str(uuid.uuid4()))
+        msg = message.ResourceHandshakeStart(resource=str(uuid.uuid1()))
         session._block_peer(session.key_id)
         session._react_to_resource_handshake_start(msg)
 
@@ -161,7 +161,7 @@ class TestResourceHandshakeSessionMixin(TempDirFixture):
         session._download_handshake_nonce = Mock()
         session._handshake_error = Mock()
 
-        msg = message.ResourceHandshakeStart(resource=str(uuid.uuid4()))
+        msg = message.ResourceHandshakeStart(resource=str(uuid.uuid1()))
 
         session._react_to_resource_handshake_start(msg)
 
@@ -173,7 +173,7 @@ class TestResourceHandshakeSessionMixin(TempDirFixture):
         session._start_handshake = Mock()
         session._handshake_error = Mock()
 
-        msg = message.ResourceHandshakeStart(resource=str(uuid.uuid4()))
+        msg = message.ResourceHandshakeStart(resource=str(uuid.uuid1()))
         handshake = ResourceHandshake(self.key_id)
 
         session._set_handshake(session.key_id, handshake)
@@ -212,7 +212,7 @@ class TestResourceHandshakeSessionMixin(TempDirFixture):
         assert session._handshake_error.called
 
         session._set_handshake(session.key_id, handshake)
-        msg = message.ResourceHandshakeNonce(nonce=str(uuid.uuid4()))
+        msg = message.ResourceHandshakeNonce(nonce=str(uuid.uuid1()))
         session._react_to_resource_handshake_nonce(msg)
 
         assert not session._finalize_handshake.called
@@ -237,7 +237,7 @@ class TestResourceHandshakeSessionMixin(TempDirFixture):
 
         session._set_handshake(session.key_id, handshake)
         msg = message.ResourceHandshakeVerdict(
-            nonce=str(uuid.uuid4()),
+            nonce=str(uuid.uuid1()),
             accepted=False,
         )
         session._react_to_resource_handshake_nonce(msg)
@@ -264,7 +264,7 @@ class TestResourceHandshakeSessionMixin(TempDirFixture):
 
         session._set_handshake(session.key_id, handshake)
         msg = message.ResourceHandshakeVerdict(
-            nonce=str(uuid.uuid4()),
+            nonce=str(uuid.uuid1()),
             accepted=False,
         )
         session._react_to_resource_handshake_nonce(msg)
@@ -443,7 +443,7 @@ class TestResourceHandshakeShare(DatabaseFixture):
 
     def setUp(self):
         super().setUp()
-        self.key_id = str(uuid.uuid4())
+        self.key_id = str(uuid.uuid1())
 
     def test_flow(self, *_):
         local_dir = os.path.join(self.tempdir, 'local')
@@ -559,7 +559,7 @@ class TestResourceHandshakeShare(DatabaseFixture):
                 ".HandlersLibrary"
                 ".register_handler"):
             task_server = TaskServer(
-                node=Mock(client=client, key=str(uuid.uuid4())),
+                node=Mock(client=client, key=str(uuid.uuid1())),
                 config_desc=ClientConfigDescriptor(),
                 client=client,
                 use_docker_manager=False
@@ -597,7 +597,7 @@ class MockTaskSession(ResourceHandshakeSessionMixin):
         self.disconnect = Mock()
         self.dropped = Mock()
 
-        self.key_id = str(uuid.uuid4())
+        self.key_id = str(uuid.uuid1())
         self.address = '1.2.3.4'
         self.data_dir = data_dir
 
@@ -606,7 +606,7 @@ class MockTaskSession(ResourceHandshakeSessionMixin):
                                   dir_manager.get_task_resource_dir)
         resource_manager = Mock(
             storage=storage,
-            content_to_pull=str(uuid.uuid4()).replace('-', ''),
+            content_to_pull=str(uuid.uuid1()).replace('-', ''),
             successful_uploads=successful_uploads,
             successful_downloads=successful_downloads,
         )
@@ -625,7 +625,7 @@ class MockTaskSession(ResourceHandshakeSessionMixin):
 
         self.task_server = Mock(
             client=Mock(datadir=data_dir),
-            node=Mock(key=str(uuid.uuid4())),
+            node=Mock(key=str(uuid.uuid1())),
             acl=get_acl(Path(data_dir)),
             resource_handshakes=dict(),
             task_manager=Mock(

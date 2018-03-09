@@ -10,10 +10,10 @@ from golem.network.hyperdrive.client import HyperdriveAsyncClient, \
     HyperdriveClient, HyperdriveClientOptions
 
 response = {
-    'id': str(uuid.uuid4()),
+    'id': str(uuid.uuid1()),
     'version': '0.2.4',
     'files': ['file1', 'file2'],
-    'hash': str(uuid.uuid4()),
+    'hash': str(uuid.uuid1()),
     'addresses': dict(
         TCP=dict(address='0.0.0.0', port=3282)
     )
@@ -52,8 +52,8 @@ class TestHyperdriveClient(TestCase):
 
     def test_get(self, _):
         client = HyperdriveClient()
-        content_hash = str(uuid.uuid4())
-        filepath = str(uuid.uuid4())
+        content_hash = str(uuid.uuid1())
+        filepath = str(uuid.uuid1())
 
         with self.assertRaises(KeyError):
             client.get(content_hash)
@@ -63,7 +63,7 @@ class TestHyperdriveClient(TestCase):
 
     def test_cancel(self, _):
         client = HyperdriveClient()
-        content_hash = str(uuid.uuid4())
+        content_hash = str(uuid.uuid1())
         response_hash = response['hash']
         assert client.cancel(content_hash) == response_hash
 

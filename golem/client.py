@@ -188,7 +188,7 @@ class Client(HardwarePresetsMixin):
         self.resource_port = 0
         self.use_monitor = use_monitor
         self.monitor = None
-        self.session_id = str(uuid.uuid4())
+        self.session_id = str(uuid.uuid1())
 
         dispatcher.connect(
             self.p2p_listener,

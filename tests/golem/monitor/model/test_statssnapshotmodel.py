@@ -2,7 +2,7 @@ import json
 import random
 import unittest.mock as mock
 from unittest import TestCase
-from uuid import uuid4
+from uuid import uuid1
 
 from pydispatch import dispatcher
 
@@ -48,8 +48,8 @@ class TestStatsSnapshotModel(MonitorTestBaseClass):
 
 class TestP2PSnapshotModel(TestCase):
     def test_init(self):
-        cliid = str(uuid4())
-        sessid = str(uuid4())
+        cliid = str(uuid1())
+        sessid = str(uuid1())
         p2psnapshot = [{"key_id": "peer1", "port": 1030, "host": "10.10.10.10"},
                        {"key_id": "peer1", "port": 1111, "host": "192.19.19.19"}]
         model = P2PSnapshotModel(cliid, sessid, p2psnapshot)
@@ -64,8 +64,8 @@ class TestP2PSnapshotModel(TestCase):
 
 class TestVMnapshotModel(TestCase):
     def test_init(self):
-        cliid = str(uuid4())
-        sessid = str(uuid4())
+        cliid = str(uuid1())
+        sessid = str(uuid1())
         vmsnapshot = VMDiagnosticsProvider().get_diagnostics(DiagnosticsOutputFormat.data)
         model = VMSnapshotModel(cliid, sessid, vmsnapshot)
         assert isinstance(model, VMSnapshotModel)

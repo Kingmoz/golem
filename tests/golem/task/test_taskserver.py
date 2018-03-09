@@ -328,9 +328,9 @@ class TestTaskServer(LogTestCase, testutils.DatabaseFixture,  # noqa pylint: dis
         ts = self.ts
         ts.network = Mock()
 
-        key_id = str(uuid.uuid4())
-        conn_id = str(uuid.uuid4())
-        subtask_id = str(uuid.uuid4())
+        key_id = str(uuid.uuid1())
+        conn_id = str(uuid.uuid1())
+        subtask_id = str(uuid.uuid1())
 
         ts.add_forwarded_session_request(key_id, conn_id)
         self.assertEqual(len(ts.forwarded_session_requests), 1)
@@ -436,7 +436,7 @@ class TestTaskServer(LogTestCase, testutils.DatabaseFixture,  # noqa pylint: dis
         ts = self.ts
         ts.network = Mock()
 
-        conn_id = str(uuid.uuid4())
+        conn_id = str(uuid.uuid1())
         session = Mock()
         session.conn_id = conn_id
 
@@ -602,9 +602,9 @@ class TestTaskServer(LogTestCase, testutils.DatabaseFixture,  # noqa pylint: dis
         session.address = '127.0.0.1'
         session.port = 10
 
-        subtask_id = str(uuid.uuid4())
-        key_id = str(uuid.uuid4())
-        conn_id = str(uuid.uuid4())
+        subtask_id = str(uuid.uuid1())
+        key_id = str(uuid.uuid1())
+        conn_id = str(uuid.uuid1())
 
         self.ts.new_session_prepare(
             session=session,
@@ -668,13 +668,13 @@ class TestTaskServer2(TestDatabaseWithReactor, testutils.TestWithClient):
             parent.tearDown(self)
 
     def test_find_sessions(self, *_):
-        subtask_id = str(uuid.uuid4())
+        subtask_id = str(uuid.uuid1())
 
         # Empty
         self.assertEqual([], self.ts._find_sessions(subtask_id))
 
         # Found task_id
-        task_id = 't' + str(uuid.uuid4())
+        task_id = 't' + str(uuid.uuid1())
         session = MagicMock()
         session.task_id = task_id
         self.ts.task_manager.subtask2task_mapping[subtask_id] = task_id
@@ -812,7 +812,7 @@ class TestRestoreResources(LogTestCase, testutils.DatabaseFixture,
     @staticmethod
     def _create_tasks(task_server, count):
         for _ in range(count):
-            task_id = str(uuid.uuid4())
+            task_id = str(uuid.uuid1())
             task = Mock()
             task.get_resources.return_value = []
             task_server.task_manager.tasks[task_id] = task
@@ -857,7 +857,7 @@ class TestRestoreResources(LogTestCase, testutils.DatabaseFixture,
     def _test_with_error_and_resource_hashes(self, error_class):
         self._create_tasks(self.ts, self.task_count)
         for state in self.ts.task_manager.tasks_states.values():
-            state.resource_hash = str(uuid.uuid4())
+            state.resource_hash = str(uuid.uuid1())
 
         with patch.object(self.resource_manager, 'add_task',
                           side_effect=error_class):

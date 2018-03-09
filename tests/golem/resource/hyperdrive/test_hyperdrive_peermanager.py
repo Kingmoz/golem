@@ -12,10 +12,10 @@ class TestHyperdrivePeerManager(TestCase):
         peer_address = {'TCP': ('1.2.3.4', 3282)}
 
         metadata = {'hyperg': peer_address}
-        task_id = str(uuid.uuid4())
+        task_id = str(uuid.uuid1())
 
         node = Mock()
-        node.key = str(uuid.uuid4())
+        node.key = str(uuid.uuid1())
 
         peer_manager = HyperdrivePeerManager(own_address)
         peer_manager.interpret_metadata(metadata, None, None, node)

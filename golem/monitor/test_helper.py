@@ -1,6 +1,6 @@
 import sys
 import unittest
-from uuid import uuid4
+from uuid import uuid1
 
 from golem.clientconfigdescriptor import ClientConfigDescriptor
 from golem.monitor.model.nodemetadatamodel import NodeMetadataModel
@@ -9,8 +9,8 @@ from golem.monitorconfig import MONITOR_CONFIG
 
 
 def meta_data():
-    cliid = str(uuid4())
-    sessid = str(uuid4())
+    cliid = str(uuid1())
+    sessid = str(uuid1())
     return NodeMetadataModel(cliid, sessid, sys.platform,
                              'app_version', ClientConfigDescriptor())
 

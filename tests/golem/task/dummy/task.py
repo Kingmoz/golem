@@ -150,7 +150,7 @@ class DummyTask(Task):
         :rtype: ComputeTaskDef"""
 
         # create new subtask_id
-        subtask_id = str(uuid.uuid4())
+        subtask_id = str(uuid.uuid1())
 
         with self._lock:
             # check if a task has been assigned to this node

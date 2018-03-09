@@ -18,9 +18,9 @@ class MockTaskResult:
         if result_type is None:
             result_type = ResultType.FILES
         if owner_key_id is None:
-            owner_key_id = str(uuid.uuid4())
+            owner_key_id = str(uuid.uuid1())
         if owner is None:
-            owner = str(uuid.uuid4())
+            owner = str(uuid.uuid1())
 
         self.task_id = task_id
         self.subtask_id = task_id
@@ -51,7 +51,7 @@ def create_package(result_manager, node_name, task_id):
     result = result_manager.create(
         node=Mock(
             node_name=node_name,
-            key=str(uuid.uuid4())
+            key=str(uuid.uuid1())
         ),
         task_result=MockTaskResult(
             task_id,
@@ -70,7 +70,7 @@ class TestEncryptedResultPackageManager(TestDirFixture):
     def setUp(self):
         TestDirFixture.setUp(self)
 
-        self.task_id = str(uuid.uuid4())
+        self.task_id = str(uuid.uuid1())
         self.dir_manager = DirManager(self.path)
         self.resource_manager = DummyResourceManager(
             self.dir_manager,

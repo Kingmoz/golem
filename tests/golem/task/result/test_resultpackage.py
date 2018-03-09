@@ -12,7 +12,7 @@ from golem.testutils import TempDirFixture
 
 
 def mock_node():
-    return Mock(name='test_node', key=uuid.uuid4())
+    return Mock(name='test_node', key=uuid.uuid1())
 
 
 def mock_task_result(task_id, result, result_type=None):
@@ -24,8 +24,8 @@ def mock_task_result(task_id, result, result_type=None):
         subtask_id=task_id,
         result=result,
         result_type=result_type,
-        owner_key_id=str(uuid.uuid4()),
-        owner=str(uuid.uuid4())
+        owner_key_id=str(uuid.uuid1()),
+        owner=str(uuid.uuid1())
     )
 
 
@@ -34,7 +34,7 @@ class PackageDirContentsFixture(TempDirFixture):
     def setUp(self):
         super().setUp()
 
-        task_id = str(uuid.uuid4())
+        task_id = str(uuid.uuid1())
         dir_manager = DirManager(self.path)
 
         res_dir = dir_manager.get_task_temporary_dir(task_id)
@@ -64,7 +64,7 @@ class PackageDirContentsFixture(TempDirFixture):
 
         self.res_dir = res_dir
         self.out_dir = out_dir
-        self.out_path = os.path.join(self.out_dir, str(uuid.uuid4()))
+        self.out_path = os.path.join(self.out_dir, str(uuid.uuid1()))
 
 
 class TestZipPackager(PackageDirContentsFixture):

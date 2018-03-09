@@ -1,6 +1,6 @@
 import json
 from typing import Any, Optional
-from uuid import uuid4
+from uuid import uuid1
 import re
 
 from apps.appsmanager import AppsManager
@@ -205,7 +205,7 @@ class Tasks:
         # FIXME CHANGE TASKI ID
         if 'id' in dictionary:
             print("Warning: discarding the UUID from the preset")
-        dictionary['id'] = str(uuid4())
+        dictionary['id'] = str(uuid1())
         deferred = Tasks.client.create_task(dictionary)
         return sync_wait(deferred, CREATE_TASK_TIMEOUT)
 

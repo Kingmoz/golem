@@ -20,8 +20,8 @@ class WaitingTaskResultFactory(factory.Factory):
     class Meta:
         model = taskserver.WaitingTaskResult
 
-    task_id = factory.Faker('uuid4')
-    subtask_id = factory.Faker('uuid4')
+    task_id = factory.Faker('uuid1')
+    subtask_id = factory.Faker('uuid1')
     result = factory.Faker('text')
     result_type = ResultType.DATA
     computing_time = factory.LazyFunction(lambda: random.randint(100, 20000))

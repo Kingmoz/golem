@@ -40,8 +40,8 @@ class ResourceSetUp(TempDirFixture):
 
     def setUp(self):
         self.dir_manager = DirManager(self.path)
-        self.node_name = str(uuid.uuid4())
-        self.task_id = str(uuid.uuid4())
+        self.node_name = str(uuid.uuid1())
+        self.task_id = str(uuid.uuid1())
 
         self.resources_dir = self.dir_manager.get_task_resource_dir(
             self.task_id)
@@ -110,7 +110,7 @@ class TestResourceManagerBase(ResourceSetUp):
 
         for resource in resources:
             assert storage.cache.get_by_path(resource.file_name) is not None
-        assert storage.cache.get_by_path(str(uuid.uuid4())) is None
+        assert storage.cache.get_by_path(str(uuid.uuid1())) is None
 
         storage.clear_cache()
 
@@ -139,7 +139,7 @@ class TestResourceManagerBase(ResourceSetUp):
         assert storage.cache.get_prefix(self.task_id)
         assert storage.cache.get_resources(self.task_id)
 
-        new_task = str(uuid.uuid4())
+        new_task = str(uuid.uuid1())
         self.resource_manager._add_task(resource_paths, new_task)
         assert len(resources) == len(storage.get_resources(new_task))
 
@@ -164,7 +164,7 @@ class TestResourceManagerBase(ResourceSetUp):
         entries = []
         for resource in self.joined_resources:
             manager = Resource(
-                str(uuid.uuid4()),
+                str(uuid.uuid1()),
                 task_id="task",
                 path=os.path.dirname(resource),
                 files=[os.path.basename(resource)]
@@ -197,7 +197,7 @@ class TestHyperdriveResourceManager(TempDirFixture):
     def setUp(self):
         super().setUp()
 
-        self.task_id = str(uuid.uuid4())
+        self.task_id = str(uuid.uuid1())
         self.handle_retries = Mock()
         self.dir_manager = DirManager(self.tempdir)
         self.resource_manager = HyperdriveResourceManager(self.dir_manager)
@@ -210,7 +210,7 @@ class TestHyperdriveResourceManager(TempDirFixture):
         self.files = {file_path: file_name}
 
     def test_add_files_invalid_paths(self, add, restore):
-        files = {str(uuid.uuid4()): 'does_not_exist'}
+        files = {str(uuid.uuid1()): 'does_not_exist'}
         with self.assertRaises(ResourceError):
             self.resource_manager.add_files(files, self.task_id,
                                             resource_hash=None)
@@ -225,7 +225,7 @@ class TestHyperdriveResourceManager(TempDirFixture):
 
     def test_add_files_with_resource_hash(self, add, restore):
         self.resource_manager.add_files(self.files, self.task_id,
-                                        resource_hash=str(uuid.uuid4()))
+                                        resource_hash=str(uuid.uuid1()))
         assert restore.called
         assert not add.called
 

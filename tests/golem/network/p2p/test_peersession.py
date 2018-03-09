@@ -522,7 +522,7 @@ class TestPeerSession(testutils.DatabaseFixture, LogTestCase,
         peer_mock = MagicMock()
         self.peer_session.p2p_service.peers["ABC"] = peer_mock
 
-        task_id = "test_{}".format(uuid.uuid4())
+        task_id = "test_{}".format(uuid.uuid1())
         msg = message.RemoveTask(task_id=task_id)
         msg.serialize(sign_func=keys_auth.sign)
         assert keys_auth.verify(msg.sig, msg.get_short_hash(), keys_auth.key_id)

@@ -24,7 +24,7 @@ class AddGetResources(TempDirFixture, LogTestCase):
         TempDirFixture.setUp(self)
         LogTestCase.setUp(self)
 
-        self.task_id = str(uuid.uuid4())
+        self.task_id = str(uuid.uuid1())
 
         client_1, dir_1, session_1 = self._create_client(self.task_id, '_1')
         client_2, dir_2, session_2 = self._create_client(self.task_id, '_2')
@@ -64,7 +64,7 @@ class AddGetResources(TempDirFixture, LogTestCase):
             os.makedirs(d, exist_ok=True)
 
             with open(resource, 'wb') as f:
-                f.write(str(uuid.uuid4()).encode() * 256)
+                f.write(str(uuid.uuid1()).encode() * 256)
 
         return relative, absolute
 

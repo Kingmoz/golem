@@ -43,7 +43,7 @@ class TestResourceServer(testwithreactor.TestDirFixtureWithReactor):
 
         src_dir = os.path.join(self.path, 'sources')
 
-        self.task_id = str(uuid.uuid4())
+        self.task_id = str(uuid.uuid1())
         self.dir_manager = DirManager(self.path)
         self.config_desc = MockConfig()
         self.target_resources = [
@@ -138,7 +138,7 @@ class TestResourceServer(testwithreactor.TestDirFixtureWithReactor):
 
         assert resources
 
-        new_path = self.path + '_' + str(uuid.uuid4())
+        new_path = self.path + '_' + str(uuid.uuid1())
 
         new_config_desc = MockConfig(new_path, node_name + "-new")
         self.resource_server.change_resource_dir(new_config_desc)
@@ -184,7 +184,7 @@ class TestResourceServer(testwithreactor.TestDirFixtureWithReactor):
             self.client
         )
 
-        new_task_id = str(uuid.uuid4())
+        new_task_id = str(uuid.uuid1())
         new_task_path = new_server.resource_manager.storage.get_dir(new_task_id)
         new_server.download_resources(relative, new_task_id)
 
